@@ -66,7 +66,7 @@
     End Function
 
     Private Maneuver As Integer
-    Private Property Quadrants As New Dictionary(Of Directions, Quadrant) Implements ShipCombat.Quadrants
+    Public Property Quadrants As New Dictionary(Of Directions, Quadrant) Implements ShipCombat.Quadrants
     Private UnassignedCrew As New List(Of Crew)
     Private CrewSizeMax As Integer
     Public Function Add(ByVal crew As Crew) As String
