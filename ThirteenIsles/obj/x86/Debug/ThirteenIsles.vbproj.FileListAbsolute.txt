@@ -1,0 +1,8 @@
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\bin\Debug\ThirteenIsles.exe
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\bin\Debug\ThirteenIsles.pdb
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\bin\Debug\ThirteenIsles.xml
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\obj\x86\Debug\ThirteenIsles.Resources.resources
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\obj\x86\Debug\ThirteenIsles.vbproj.GenerateResource.Cache
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\obj\x86\Debug\ThirteenIsles.exe
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\obj\x86\Debug\ThirteenIsles.xml
+C:\Users\Owner\documents\visual studio 2010\Projects\ThirteenIsles\ThirteenIsles\obj\x86\Debug\ThirteenIsles.pdb
