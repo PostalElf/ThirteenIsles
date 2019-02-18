@@ -53,8 +53,6 @@
 
     Private Property Name As String Implements ShipCombat.Name
     Private Size As ShipSize
-    Private MaxSailing As Integer
-    Private MaxManeuver As Integer
     Private Property CurrentFacing As Directions Implements ShipCombat.CurrentFacing
 
     Private Inventory As Inventory
@@ -65,31 +63,22 @@
         Return Inventory.Remove(item)
     End Function
 
+    Private Sailing As Integer
+    Private MaxSailing As Integer
     Private Maneuver As Integer
-    Public Property Quadrants As New Dictionary(Of Directions, Quadrant) Implements ShipCombat.Quadrants
-    Private UnassignedCrew As New List(Of Crew)
-    Private CrewSizeMax As Integer
-    Public Function Add(ByVal crew As Crew) As String
-        If UnassignedCrew.Contains(crew) Then Return "Crew already assigned."
+    Private MaxManeuver As Integer
 
-        UnassignedCrew.Add(crew)
-        Return Nothing
-    End Function
-    Public Function Remove(ByVal crew As Crew) As String
-        If UnassignedCrew.Contains(crew) = False Then Return "Crew not found."
-
-        UnassignedCrew.Remove(crew)
-        Return Nothing
-    End Function
+    Private Property Quadrants As New Dictionary(Of Directions, Quadrant) Implements ShipCombat.Quadrants
 
     Public Function ConsoleReport(ByVal id As Integer) As String
         Dim total As String = vbIndent(id) & "The " & Size.ToString & " '" & Name & "'" & vbCrLf
-        total &= vbIndent(id + 1) & vbTabb("Cargo Hull:", 12) & Inventory.Size & "/" & Inventory.SizeMax & vbCrLf
+        total &= vbIndent(id + 1) & vbTabb("Cargo:", 12) & Inventory.Size & "/" & Inventory.SizeMax & vbCrLf
         total &= vbIndent(id + 1) & vbTabb("Sailgauge:", 12) & MaxSailing & vbCrLf
         total &= vbIndent(id + 1) & vbTabb("Maneuvers:", 12) & Maneuver & "/" & MaxManeuver & vbCrLf
 
+        total &= vbIndent(id + 1) & "Quadrants:" & vbCrLf
         For n As Directions = 1 To 4
-            total &= Quadrants(n).ConsoleReport(id + 1)
+            total &= vbIndent(id + 2) & Quadrants(n).ConsoleReportBrief() & vbCrLf
         Next
 
         Return total

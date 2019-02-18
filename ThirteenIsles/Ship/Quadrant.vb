@@ -8,28 +8,42 @@
 
     Private Ship As Ship
     Private Facing As Directions
-    Private Guns As New List(Of Gun)
     Private GunsMax As Integer
+    Private Sections As New List(Of Section)
 
-    Private Crews As New List(Of Crew)
+    Private ReadOnly Property Crews As List(Of Crew)
+        Get
+            Dim total As New List(Of Crew)
+            For Each Section In Sections
+                total.AddRange(CType(Section, ShipAssignable).Crews)
+            Next
+            Return total
+        End Get
+    End Property
     Private CrewMax As Integer
-    Public Function Add(ByVal Crew As Crew) As String
-        If Crews.Count + 1 > CrewMax Then Return "Insufficient space."
-
-        Crews.Add(Crew)
-        Return Nothing
-    End Function
-    Public Function Remove(ByVal Crew As Crew) As String
-        If Crews.Contains(Crew) = False Then Return "Invalid crew."
-
-        Crews.Remove(Crew)
-        Return Nothing
+    Public Function Addable(ByVal crew As Crew) As Boolean
+        If Crews.Count + 1 > CrewMax Then Return False Else Return True
     End Function
 
-    Public Function ConsoleReport(ByVal id As Integer) As String
-        Dim total As String = vbIndent(id) & Facing.ToString & ":" & vbCrLf
-        total &= vbIndent(id + 1) & "Crew: " & Crews.Count & "/" & CrewMax & vbCrLf
-        total &= vbIndent(id + 1) & "Guns: " & Guns.Count & "/" & GunsMax & vbCrLf
+    Private DamageTaken As Integer
+    Private DamageMax As Integer
+    Private ReadOnly Property DamagePercentage As Integer
+        Get
+            If DamageTaken = 0 Then Return 0
+            If DamageMax = 0 Then Return 0
+            Return DamageTaken / DamageMax * 100
+        End Get
+    End Property
+
+    Public Function ConsoleReportBrief() As String
+        Dim total As String = vbTabb(Facing.ToString & ":", 12)
+        total &= Crews.Count & "/" & CrewMax
+        total &= "  "
+        total &= ProgressBar(10, DamagePercentage)
         Return total
+    End Function
+    Public Function ConsoleReport(ByVal ind As Integer) As String
+        Dim total As String = vbIndent(ind) & Facing.ToString & vbCrLf
+        total &= vbIndent(ind + 1)
     End Function
 End Class

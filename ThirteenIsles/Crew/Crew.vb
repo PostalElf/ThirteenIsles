@@ -25,14 +25,8 @@
         Skills.Train(skill)
     End Sub
 
-    Public Job As Job
-    Private ReadOnly Property JobSkill As Skill
-        Get
-            If Job = 0 Then Return 0
-            If Job >= 1 AndAlso Job < 11 Then Return Job
-            Return Nothing
-        End Get
-    End Property
+    Public Quarters As Section
+    Public Job As Section
     Public ReadOnly Property Skill(ByVal s As Skill) As Integer
         Get
             Return Skills(s) + Traits.GetSkillBonus(s)
@@ -41,7 +35,7 @@
 
     Public Function ConsoleReport(Optional ByVal id As Integer = 0) As String
         Dim total As String = vbIndent(id) & Name & ", " & Race.ToString
-        If Job <> 0 Then total &= " " & Job.ToString
+        If Job Is Nothing = False Then total &= " " & Job.JobDescription
         total &= vbCrLf
 
         total &= vbIndent(id + 1) & "Traits:" & vbCrLf
@@ -60,17 +54,6 @@ Public Enum Race
     Mortal = 1
     Seatouched
     Ghost
-End Enum
-
-Public Enum Job
-    Gunner = 1
-    Doctor
-    Cook
-    Sailor
-    Navigator
-    Helmsman
-    Carpenter
-    Alchemist
 End Enum
 
 Public Class CrewGenerator

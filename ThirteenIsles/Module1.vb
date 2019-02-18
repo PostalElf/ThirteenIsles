@@ -4,7 +4,8 @@
         Dim menuChoices As New Dictionary(Of Char, String)
         menuChoices.Add("c"c, "Cargo Hull")
         menuChoices.Add("q"c, "Inspect Quadrant")
-        menuChoices.Add("r"c, "Assign Roles")
+        menuChoices.Add("r"c, "Manage Roles")
+        menuChoices.Add("s"c, "Install Section")
 
         Dim ship As Ship = SetupShip()
         While True
@@ -18,14 +19,13 @@
             Select Case choice
                 Case "c"c : MenuCargoHull(ship)
                 Case "q"c : MenuQuadrant(ship)
-                Case "r"c
+                Case "r"c : MenuRole(ship)
             End Select
         End While
     End Sub
 
     Private Function SetupShip() As Ship
         Dim ship As Ship = ship.Generate(ShipSize.Schooner)
-        ship.Add(Crew.Generate(Race.Mortal))
         ship.Add(Item.Generate("Bloodcedar", 5))
         Return ship
     End Function
@@ -37,7 +37,9 @@
     Private Sub MenuQuadrant(ByVal ship As Ship)
         Dim dirs As New List(Of Directions) From {Directions.Fore, Directions.Starboard, Directions.Aft, Directions.Port}
         Dim d As Directions = Menu.getListChoice(Of Directions)(dirs, 0)
-        Dim quadrant As Quadrant = ship.quadrants(d)
+        'Dim quadrant As Quadrant = ship.Quadrants(d)
+
+        'quadrant.ConsoleReport(0)
     End Sub
     Private Sub MenuRole(ByVal ship As Ship)
 
