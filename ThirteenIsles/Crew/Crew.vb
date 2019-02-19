@@ -3,19 +3,29 @@
         Dim crew As New Crew
         With crew
             If race <> 0 Then
-                .Race = race
+                ._Race = race
             Else
                 Dim raceLength As Integer = [Enum].GetValues(GetType(Race)).Length + 1
-                .Race = Rng.Next(1, raceLength)
+                ._Race = Rng.Next(1, raceLength)
             End If
-            .Name = CrewGenerator.GetName(race)
+            ._Name = CrewGenerator.GetName(race)
             .Traits.Add(CrewGenerator.GetTrait(race))
         End With
         Return crew
     End Function
 
-    Private Race As Race
-    Private Name As String
+    Private _Race As Race
+    Public ReadOnly Property Race As Race
+        Get
+            Return _Race
+        End Get
+    End Property
+    Private _Name As String
+    Public ReadOnly Property Name As String
+        Get
+            Return _Name
+        End Get
+    End Property
     Private Traits As New Traits
     Private Skills As New Skills
     Public Sub SkillImprove(ByVal skill As Skill, ByVal amt As Integer)
@@ -25,8 +35,28 @@
         Skills.Train(skill)
     End Sub
 
-    Public Quarters As Section
-    Public Job As Section
+    Private _Quarters As SectionQuarters
+    Public WriteOnly Property Quarters As SectionQuarters
+        Set(ByVal value As SectionQuarters)
+            If _Quarters Is Nothing = False Then CType(_Quarters, ShipAssignable).Remove(Me)
+            _Quarters = value
+            CType(_Quarters, ShipAssignable).Add(Me)
+        End Set
+    End Property
+    Private _Job As Section
+    Public WriteOnly Property Job As Section
+        Set(ByVal value As Section)
+            If _Job Is Nothing = False Then CType(_Job, ShipAssignable).Remove(Me)
+            _Job = value
+            CType(_Job, ShipAssignable).Add(Me)
+        End Set
+    End Property
+    Private ReadOnly Property JobSkill As Skill
+        Get
+            If _Job Is Nothing Then Return Nothing
+            Return _Job.jobskill
+        End Get
+    End Property
     Public ReadOnly Property Skill(ByVal s As Skill) As Integer
         Get
             Return Skills(s) + Traits.GetSkillBonus(s)
@@ -34,8 +64,8 @@
     End Property
 
     Public Function ConsoleReport(Optional ByVal id As Integer = 0) As String
-        Dim total As String = vbIndent(id) & Name & ", " & Race.ToString
-        If Job Is Nothing = False Then total &= " " & Job.JobDescription
+        Dim total As String = vbIndent(id) & _Name & ", " & _Race.ToString
+        If _Job Is Nothing = False Then total &= " " & _Job.JobDescription
         total &= vbCrLf
 
         total &= vbIndent(id + 1) & "Traits:" & vbCrLf

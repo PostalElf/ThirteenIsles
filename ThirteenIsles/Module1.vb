@@ -1,6 +1,7 @@
 ﻿Module Module1
 
     Sub Main()
+        Console.SetWindowSize(200, 50)
         Dim menuChoices As New Dictionary(Of Char, String)
         menuChoices.Add("c"c, "Cargo Hull")
         menuChoices.Add("q"c, "Inspect Quadrant")
@@ -30,7 +31,10 @@
     Private Function SetupShip() As Ship
         Dim ship As Ship = ship.Generate(ShipSize.Schooner)
         ship.Add(Item.Generate("Bloodcedar", 5))
-        ship.Add(New SectionQuarters, Directions.Port)
+        ship.Add(SectionQuarters.Generate(Race.Mortal, 6), Directions.Aft)
+        ship.Add(SectionQuarters.Generate(Race.Mortal, 6), Directions.Aft)
+        ship.Add(SectionSails.Generate(SailQuality.Standard, 4), Directions.Port)
+        ship.Add(SectionSails.Generate(SailQuality.Standard, 4), Directions.Port)
         Return ship
     End Function
 
@@ -56,16 +60,26 @@
         If Menu.confirmChoice(0, "Add to ship? ") = False Then Exit Sub
 
         'check for housing
+        Console.WriteLine()
         Dim quarters As List(Of Section) = ship.GetSections({"type=quarters"})
-        Dim hasSpace As Boolean = True
-        For Each q In quarters
-            If CType(q, ShipAssignable).Addable(crew) = True Then hasSpace = False : Exit For
+        For n = quarters.Count - 1 To 0 Step -1
+            If CType(quarters(n), ShipAssignable).Addable(crew) = False Then quarters.RemoveAt(n)
         Next
-        If hasSpace = False Then Console.WriteLine("Insufficient berthing space.") : Console.ReadKey() : Exit Sub
+        If quarters.Count = 0 Then Console.WriteLine("Insufficient berthing space.") : Console.ReadKey() : Exit Sub
+        Dim quarter As SectionQuarters = Menu.getListChoice(quarters, 0, "Select berth:")
 
         'assign role
-        Dim sections As List(Of Section) = ship.GetSections({""})
+        Dim sections As List(Of Section) = ship.GetSections({"addable=true"})
+        For n = sections.Count - 1 To 0 Step -1
+            If sections(n).GetType = GetType(SectionQuarters) Then sections.RemoveAt(n)
+        Next
         If sections.Count = 0 Then Exit Sub
+        Dim job As Section = Menu.getListChoice(Of Section)(sections, 0, "Assign to which section?")
 
+        'confirm
+        crew.Quarters = quarter
+        crew.Job = job
+        Console.WriteLine(crew.Name & " has been berthed in " & quarter.Name & " and is working in " & job.Name & ".")
+        Console.ReadKey()
     End Sub
 End Module

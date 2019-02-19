@@ -7,7 +7,7 @@
     End Sub
 
     Private Ship As Ship
-    Private Facing As Directions
+    Public Facing As Directions
     Private GunsMax As Integer
 
     Private Sections As New List(Of Section)
@@ -20,6 +20,7 @@
     End Function
     Public Function Add(ByVal section As Section) As String
         Sections.Add(section)
+        section.quadrant = Me
         Return Nothing
     End Function
     Public Function Remove(ByVal section As Section) As String
