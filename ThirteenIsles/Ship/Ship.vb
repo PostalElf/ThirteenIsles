@@ -69,6 +69,22 @@
     Private MaxManeuver As Integer
 
     Private Property Quadrants As New Dictionary(Of Directions, Quadrant) Implements ShipCombat.Quadrants
+    Public Function Add(ByVal section As Section, ByVal facing As Directions) As String
+        Dim q As Quadrant = Quadrants(facing)
+        Return q.Add(section)
+    End Function
+    Public Function Remove(ByVal section As Section, ByVal facing As Directions) As String
+        Dim q As Quadrant = Quadrants(facing)
+        Return q.remove(section)
+    End Function
+    Public Function GetSections(ByVal param As String()) As List(Of Section)
+        Dim total As New List(Of Section)
+        For Each q In Quadrants.Values
+            Dim qs As List(Of Section) = q.GetSections(param)
+            If qs Is Nothing = False AndAlso qs.Count > 0 Then total.AddRange(qs)
+        Next
+        Return total
+    End Function
 
     Public Function ConsoleReport(ByVal id As Integer) As String
         Dim total As String = vbIndent(id) & "The " & Size.ToString & " '" & Name & "'" & vbCrLf

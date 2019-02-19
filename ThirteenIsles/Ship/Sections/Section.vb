@@ -1,7 +1,9 @@
 ﻿Public MustInherit Class Section
     Implements ShipAssignable
+    Protected Name As String
     Private Quadrant As Quadrant
     Public MustOverride ReadOnly Property JobDescription As String
+    Public MustOverride Function GetSection(ByVal param As String()) As Boolean
 
     Private Property Crews As New List(Of Crew) Implements ShipAssignable.Crews
     Private Sub Add(ByVal crew As Crew) Implements ShipAssignable.Add

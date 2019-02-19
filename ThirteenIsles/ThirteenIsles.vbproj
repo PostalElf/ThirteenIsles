@@ -96,9 +96,13 @@
     <Compile Include="Ship\Sections\SectionGun.vb" />
     <Compile Include="Ship\Quadrant.vb" />
     <Compile Include="Ship\Sections\Section.vb" />
+    <Compile Include="Ship\Sections\SectionHelm.vb" />
     <Compile Include="Ship\Sections\SectionHospital.vb" />
     <Compile Include="Ship\Sections\SectionKitchen.vb" />
+    <Compile Include="Ship\Sections\SectionLaboratory.vb" />
+    <Compile Include="Ship\Sections\SectionNavigation.vb" />
     <Compile Include="Ship\Sections\SectionQuarters.vb" />
+    <Compile Include="Ship\Sections\SectionSails.vb" />
     <Compile Include="Ship\Ship.vb" />
     <Compile Include="Ship\ShipAssignable.vb" />
     <Compile Include="Ship\ShipCombat.vb" />

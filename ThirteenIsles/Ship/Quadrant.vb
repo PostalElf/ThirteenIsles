@@ -9,12 +9,31 @@
     Private Ship As Ship
     Private Facing As Directions
     Private GunsMax As Integer
+
     Private Sections As New List(Of Section)
+    Public Function GetSections(ByVal param As String()) As List(Of Section)
+        Dim total As New List(Of Section)
+        For Each s In Sections
+            If s.GetSection(param) = True Then total.Add(s)
+        Next
+        Return total
+    End Function
+    Public Function Add(ByVal section As Section) As String
+        Sections.Add(section)
+        Return Nothing
+    End Function
+    Public Function Remove(ByVal section As Section) As String
+        If Sections.Contains(section) = False Then Return "Section not found in quadrant."
+        Sections.Remove(section)
+        Return Nothing
+    End Function
 
     Private ReadOnly Property Crews As List(Of Crew)
         Get
+            'only return crews in job
             Dim total As New List(Of Crew)
             For Each Section In Sections
+                If Section.GetType = GetType(SectionQuarters) Then Continue For
                 total.AddRange(CType(Section, ShipAssignable).Crews)
             Next
             Return total
@@ -43,7 +62,11 @@
         Return total
     End Function
     Public Function ConsoleReport(ByVal ind As Integer) As String
-        Dim total As String = vbIndent(ind) & Facing.ToString & vbCrLf
-        total &= vbIndent(ind + 1)
+        Dim total As String = vbIndent(ind) & Facing.ToString & ":" & vbCrLf
+        total &= vbIndent(ind + 1) & "Guns:" & vbCrLf
+        For Each gun In GetSections({"type=gun"})
+            total &= vbIndent(ind + 2) & CType(gun, SectionGun).ConsoleReportBrief & vbCrLf
+        Next
+        Return total
     End Function
 End Class
