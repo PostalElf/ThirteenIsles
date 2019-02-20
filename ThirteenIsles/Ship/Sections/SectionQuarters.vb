@@ -14,7 +14,8 @@
         For Each p In param
             Dim ps As String() = p.Split("=")
             Select Case ps(0).ToLower
-                Case "type" : If ps(1) <> "quarters" Then Return False
+                Case "type" : If ps(1).ToLower <> "quarters" Then Return False
+                Case "addable" : If ps(1).ToLower <> Me.Race.ToString.ToLower Then Return False
                 Case Else : If MyBase.GetSectionBase(ps) = False Then Return False
             End Select
         Next
@@ -39,6 +40,7 @@
                 Case Else : Throw New Exception("Invalid crewmax size.")
             End Select
             ._Name = p & .Race.ToString & " Quarters"
+            ._Weight = .CrewMax * 5
         End With
         Return q
     End Function

@@ -85,6 +85,14 @@
         Next
         Return total
     End Function
+    Public Function GetCrews(ByVal param As String()) As List(Of Crew)
+        Dim total As New List(Of Crew)
+        For Each q In Quadrants.Values
+            Dim qs As List(Of Crew) = q.getcrews(param)
+            If qs Is Nothing = False AndAlso qs.Count > 0 Then total.AddRange(qs)
+        Next
+        Return total
+    End Function
 
     Public Function ConsoleReport(ByVal id As Integer) As String
         Dim total As String = vbIndent(id) & "The " & Size.ToString & " '" & Name & "'" & vbCrLf

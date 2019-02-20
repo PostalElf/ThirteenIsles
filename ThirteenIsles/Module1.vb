@@ -48,7 +48,20 @@
         Dim d As Directions = Menu.getListChoice(Of Directions)(dirs, 0)
     End Sub
     Private Sub MenuRole(ByVal ship As Ship)
+        Dim crews As List(Of Crew) = ship.GetCrews({""})
+        Dim crew As Crew = Menu.getListChoice(crews, 0, "Select crew member:")
 
+        Console.WriteLine(crew.ConsoleReport)
+        Console.WriteLine()
+
+        Dim sections As List(Of Section) = ship.GetSections({"noquarters=true", "addable=true"})
+        If sections.Count = 0 Then Console.WriteLine("No other open jobs.") : Console.ReadKey() : Exit Sub
+        Dim job As Section = Menu.getListChoice(sections, 0, "Select a job:")
+
+        'confirm
+        crew.Job = job
+        Console.WriteLine(crew.Name & " is now working in " & job.Name & ".")
+        Console.ReadKey()
     End Sub
     Private Sub MenuSection(ByVal Ship As Ship)
 
@@ -61,18 +74,12 @@
 
         'check for housing
         Console.WriteLine()
-        Dim quarters As List(Of Section) = ship.GetSections({"type=quarters"})
-        For n = quarters.Count - 1 To 0 Step -1
-            If CType(quarters(n), ShipAssignable).Addable(crew) = False Then quarters.RemoveAt(n)
-        Next
+        Dim quarters As List(Of Section) = ship.GetSections({"type=quarters", "addable=" & crew.Race.ToString.ToLower})
         If quarters.Count = 0 Then Console.WriteLine("Insufficient berthing space.") : Console.ReadKey() : Exit Sub
         Dim quarter As SectionQuarters = Menu.getListChoice(quarters, 0, "Select berth:")
 
         'assign role
-        Dim sections As List(Of Section) = ship.GetSections({"addable=true"})
-        For n = sections.Count - 1 To 0 Step -1
-            If sections(n).GetType = GetType(SectionQuarters) Then sections.RemoveAt(n)
-        Next
+        Dim sections As List(Of Section) = ship.GetSections({"addable=true", "noquarters=true"})
         If sections.Count = 0 Then Exit Sub
         Dim job As Section = Menu.getListChoice(Of Section)(sections, 0, "Assign to which section?")
 

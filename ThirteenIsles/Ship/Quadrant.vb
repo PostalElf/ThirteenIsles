@@ -18,6 +18,14 @@
         Next
         Return total
     End Function
+    Public Function GetCrews(ByVal param As String()) As List(Of Crew)
+        Dim total As New List(Of Crew)
+        For Each s In Sections
+            Dim ss As List(Of Crew) = s.getcrews(param)
+            If ss Is Nothing = False AndAlso ss.Count > 0 Then total.AddRange(ss)
+        Next
+        Return total
+    End Function
     Public Function Add(ByVal section As Section) As String
         Sections.Add(section)
         section.quadrant = Me

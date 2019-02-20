@@ -13,6 +13,23 @@
         End With
         Return crew
     End Function
+    Public Function GetCrew(ByVal param As String()) As Boolean
+        For Each p In param
+            Dim ps As String() = p.Split("=")
+            Select Case ps(0).ToLower
+                Case "job"
+                    If ps(1).ToLower = "unassigned" AndAlso _Job Is Nothing = False Then
+                        Return False
+                    ElseIf ps(1).ToLower = "assigned" AndAlso _Job Is Nothing Then
+                        Return False
+                    Else
+                        If _Job Is Nothing Then Return False
+                        If JobSkill.ToString.ToLower <> ps(1).ToLower Then Return False
+                    End If
+            End Select
+        Next
+        Return True
+    End Function
 
     Private _Race As Race
     Public ReadOnly Property Race As Race
@@ -26,6 +43,7 @@
             Return _Name
         End Get
     End Property
+
     Private Traits As New Traits
     Private Skills As New Skills
     Public Sub SkillImprove(ByVal skill As Skill, ByVal amt As Integer)
