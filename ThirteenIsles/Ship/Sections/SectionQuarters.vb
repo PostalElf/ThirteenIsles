@@ -39,13 +39,13 @@
                 Case Is >= 9 : p = "Huge "
                 Case Else : Throw New Exception("Invalid crewmax size.")
             End Select
-            ._Name = p & .Race.ToString & " Quarters"
+            ._Name = "'" & .GenerateName() & "' (" & p & .Race.ToString & " Quarters)"
             ._Weight = .CrewMax * 5
         End With
         Return q
     End Function
     Protected Overrides Function Addable(ByVal Crew As Crew) As Boolean
-        If Crew.race <> Race Then Return False
+        If Crew.Race <> Race Then Return False
         If MyBase.Addable(Crew) = False Then Return False
         Return True
     End Function

@@ -6,6 +6,12 @@
             Return _Name & " (" & Quadrant.facing.tostring & ")"
         End Get
     End Property
+    Private Shared Names As New List(Of String)
+    Protected Function GenerateName() As String
+        If Names.Count = 0 Then Names = IO.ImportTextList("data/sectionNames.txt")
+        Return GrabRandom(Of String)(Names)
+    End Function
+
     Public Quadrant As Quadrant
     Protected _Weight As Integer
     Public ReadOnly Property Weight As Integer

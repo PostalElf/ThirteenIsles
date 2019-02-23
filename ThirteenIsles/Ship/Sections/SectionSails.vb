@@ -36,7 +36,7 @@
                 Case 5 To 6 : p = "Large "
                 Case Is >= 7 : p = "Huge "
             End Select
-            ._Name = p & .Quality.ToString & " Sails"
+            ._Name = "'" & .GenerateName & "' (" & p & .Quality.ToString & " Sails)"
             ._Weight = .CrewMax * 5
         End With
         Return s
