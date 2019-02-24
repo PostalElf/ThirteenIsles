@@ -1,11 +1,7 @@
 ﻿Public MustInherit Class Section
     Implements ShipAssignable
     Protected _Name As String
-    Public ReadOnly Property Name As String
-        Get
-            Return _Name & " (" & Quadrant.facing.tostring & ")"
-        End Get
-    End Property
+    Public MustOverride ReadOnly Property Name As String
     Private Shared Names As New List(Of String)
     Protected Function GenerateName() As String
         If Names.Count = 0 Then Names = IO.ImportTextList("data/sectionNames.txt")
@@ -58,6 +54,6 @@
     End Sub
 
     Public Overrides Function ToString() As String
-        Return _Name
+        Return Name
     End Function
 End Class

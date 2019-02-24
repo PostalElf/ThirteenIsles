@@ -20,4 +20,12 @@
         Next
         Return True
     End Function
+
+    Public Overrides ReadOnly Property Name As String
+        Get
+            Dim total As String = _Name & " (Laboratory"
+            If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
+            Return total
+        End Get
+    End Property
 End Class

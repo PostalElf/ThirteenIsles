@@ -30,20 +30,28 @@
             .Race = race
             .CrewMax = crewMax
 
-            Dim p As String
-            Select Case .CrewMax
-                Case Is <= 2 : p = "Private "
-                Case 3 To 4 : p = "Standard "
-                Case 5 To 6 : p = "Medium "
-                Case 7 To 8 : p = "Large "
-                Case Is >= 9 : p = "Huge "
-                Case Else : Throw New Exception("Invalid crewmax size.")
-            End Select
-            ._Name = "'" & .GenerateName() & "' (" & p & .Race.ToString & " Quarters)"
+            ._Name = "'" & .GenerateName() & "'"
             ._Weight = .CrewMax * 5
         End With
         Return q
     End Function
+    Private Function NamePrefix() As String
+        Select Case CrewMax
+            Case Is <= 2 : Return "Private"
+            Case 3 To 4 : Return "Standard"
+            Case 5 To 6 : Return "Medium"
+            Case 7 To 8 : Return "Large"
+            Case Is >= 9 : Return "Huge"
+            Case Else : Throw New Exception("Invalid crewmax size.")
+        End Select
+    End Function
+    Public Overrides ReadOnly Property Name As String
+        Get
+            Dim total As String = _Name & " (" & NamePrefix() & " " & Race.ToString & " Quarters"
+            If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
+            Return total
+        End Get
+    End Property
     Protected Overrides Function Addable(ByVal Crew As Crew) As Boolean
         If Crew.Race <> Race Then Return False
         If MyBase.Addable(Crew) = False Then Return False

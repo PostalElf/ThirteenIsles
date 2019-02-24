@@ -29,18 +29,29 @@
             .Quality = quality
             .CrewMax = crewMax
 
-            Dim p As String = ""
-            Select Case .CrewMax
-                Case Is <= 2 : p = "Small "
-                Case 3 To 4 : p = "Medium "
-                Case 5 To 6 : p = "Large "
-                Case Is >= 7 : p = "Huge "
-            End Select
-            ._Name = "'" & .GenerateName & "' (" & p & .Quality.ToString & " Sails)"
+            ._Name = "'" & .GenerateName & "'"
             ._Weight = .CrewMax * 5
         End With
         Return s
     End Function
+    Private ReadOnly Property NamePrefix As String
+        Get
+            Select Case CrewMax
+                Case Is <= 2 : Return "Small"
+                Case 3 To 4 : Return "Medium"
+                Case 5 To 6 : Return "Large"
+                Case Is >= 7 : Return "Huge"
+                Case Else : Throw New Exception("Unexpected CrewMax.")
+            End Select
+        End Get
+    End Property
+    Public Overrides ReadOnly Property Name As String
+        Get
+            Dim total As String = _Name & " (" & Quality.ToString & " " & NamePrefix & " Sails"
+            If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
+            Return total
+        End Get
+    End Property
 End Class
 
 Public Enum SailQuality
