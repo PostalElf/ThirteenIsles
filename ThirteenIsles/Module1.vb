@@ -46,6 +46,8 @@
     Private Sub MenuQuadrant(ByVal ship As Ship)
         Dim dirs As New List(Of Directions) From {Directions.Fore, Directions.Starboard, Directions.Aft, Directions.Port}
         Dim d As Directions = Menu.getListChoice(Of Directions)(dirs, 0)
+        Console.WriteLine(ship.ConsoleReportQuadrant(0, d))
+        Console.ReadKey()
     End Sub
     Private Sub MenuRole(ByVal ship As Ship)
         Dim crews As List(Of Crew) = ship.GetCrews({""})
@@ -60,7 +62,7 @@
 
         'confirm
         crew.Job = job
-        Console.WriteLine(crew.Name & " is now working in " & job.Name & ".")
+        Console.WriteLine(crew.Name & " is now working in " & job.NameFull & ".")
         Console.ReadKey()
     End Sub
     Private Sub MenuSection(ByVal Ship As Ship)
@@ -86,7 +88,7 @@
         'confirm
         crew.Quarters = quarter
         crew.Job = job
-        Console.WriteLine(crew.Name & " has been berthed in " & quarter.Name & " and is working in " & job.Name & ".")
+        Console.WriteLine(crew.Name & " has been berthed in " & quarter.NameFull & " and is working in " & job.NameFull & ".")
         Console.ReadKey()
     End Sub
 End Module

@@ -110,6 +110,9 @@
     Public Function ConsoleReportInventory(ByVal id As Integer) As String
         Return Inventory.ConsoleReport(id)
     End Function
+    Public Function ConsoleReportQuadrant(ByVal ind As Integer, ByVal d As Directions) As String
+        Return Quadrants(d).ConsoleReport(ind)
+    End Function
 End Class
 
 Public Enum ShipSize

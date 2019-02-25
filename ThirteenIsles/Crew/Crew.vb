@@ -96,6 +96,9 @@
         Next
         Return total
     End Function
+    Public Function ConsoleReportBrief() As String
+
+    End Function
 End Class
 
 Public Enum Race

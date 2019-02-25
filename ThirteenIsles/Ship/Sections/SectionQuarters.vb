@@ -45,13 +45,16 @@
             Case Else : Throw New Exception("Invalid crewmax size.")
         End Select
     End Function
-    Public Overrides ReadOnly Property Name As String
+    Public Overrides ReadOnly Property NameFull As String
         Get
             Dim total As String = _Name & " (" & NamePrefix() & " " & Race.ToString & " Quarters"
             If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
             Return total
         End Get
     End Property
+    Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
+        Return _Name
+    End Function
     Protected Overrides Function Addable(ByVal Crew As Crew) As Boolean
         If Crew.Race <> Race Then Return False
         If MyBase.Addable(Crew) = False Then Return False

@@ -93,6 +93,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Ship\ConsoleReportBriefable.vb" />
     <Compile Include="Ship\Sections\SectionGun.vb" />
     <Compile Include="Ship\Quadrant.vb" />
     <Compile Include="Ship\Sections\Section.vb" />

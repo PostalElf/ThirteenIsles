@@ -21,11 +21,14 @@
         Return True
     End Function
 
-    Public Overrides ReadOnly Property Name As String
+    Public Overrides ReadOnly Property NameFull As String
         Get
             Dim total As String = _Name & " (Navigation"
             If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
             Return total
         End Get
     End Property
+    Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
+
+    End Function
 End Class

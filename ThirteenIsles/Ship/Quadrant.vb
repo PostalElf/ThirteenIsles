@@ -72,10 +72,25 @@
     End Function
     Public Function ConsoleReport(ByVal ind As Integer) As String
         Dim total As String = vbIndent(ind) & Facing.ToString & ":" & vbCrLf
-        total &= vbIndent(ind + 1) & "Guns:" & vbCrLf
-        For Each gun In GetSections({"type=gun"})
-            total &= vbIndent(ind + 2) & CType(gun, SectionGun).ConsoleReportBrief & vbCrLf
-        Next
+
+        total &= ParseConsoleReportBrief(GetCrews({""}), ind + 1, "Crew")
+        total &= ParseConsoleReportBrief(GetSections({"type=gun"}), ind + 1, "Guns")
+        total &= ParseConsoleReportBrief(GetSections({"type=quarters"}), ind + 1, "Quarters")
         Return total
+    End Function
+    Private Function ParseConsoleReportBrief(ByVal l As IEnumerable(Of Object), ByVal ind As Integer, ByVal title As String) As String
+        Dim total As String = ""
+        Dim count As Integer = 0
+        For Each Item In l
+            If TypeOf Item Is ConsoleReportBriefable = False Then Continue For
+            Dim i As ConsoleReportBriefable = CType(Item, ConsoleReportBriefable)
+            If i.Name.Count > count Then count = i.Name.Count
+        Next
+        For Each Item In l
+            If TypeOf Item Is ConsoleReportBriefable = False Then Continue For
+            total &= vbIndent(ind + 1) & CType(Item, ConsoleReportBriefable).ConsoleReportBrief(count) & vbCrLf
+        Next
+        If total = "" Then Return ""
+        Return vbIndent(ind) & title & ":" & vbCrLf & total & vbCrLf
     End Function
 End Class

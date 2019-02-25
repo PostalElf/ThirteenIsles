@@ -28,7 +28,7 @@
         End Get
     End Property
 
-    Public Overrides ReadOnly Property Name As String
+    Public Overrides ReadOnly Property NameFull As String
         Get
             Dim total As String = _Name & " (Guns"
             If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
@@ -36,7 +36,7 @@
         End Get
     End Property
 
-    Public Function ConsoleReportBrief() As String
+    Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
         Dim total As String = vbTabb(_Name & ":", 15)
         total &= ProgressBar(10, LoadProgressPercentage)
         Return total

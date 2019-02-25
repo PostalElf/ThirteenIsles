@@ -45,13 +45,16 @@
             End Select
         End Get
     End Property
-    Public Overrides ReadOnly Property Name As String
+    Public Overrides ReadOnly Property NameFull As String
         Get
             Dim total As String = _Name & " (" & Quality.ToString & " " & NamePrefix & " Sails"
             If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
             Return total
         End Get
     End Property
+    Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
+        Return _Name
+    End Function
 End Class
 
 Public Enum SailQuality

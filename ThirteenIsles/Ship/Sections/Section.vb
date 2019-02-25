@@ -1,7 +1,12 @@
 ﻿Public MustInherit Class Section
-    Implements ShipAssignable
+    Implements ShipAssignable, ConsoleReportBriefable
     Protected _Name As String
-    Public MustOverride ReadOnly Property Name As String
+    Public ReadOnly Property Name As String Implements ConsoleReportBriefable.Name
+        Get
+            Return _Name
+        End Get
+    End Property
+    Public MustOverride ReadOnly Property NameFull As String
     Private Shared Names As New List(Of String)
     Protected Function GenerateName() As String
         If Names.Count = 0 Then Names = IO.ImportTextList("data/sectionNames.txt")
@@ -54,6 +59,7 @@
     End Sub
 
     Public Overrides Function ToString() As String
-        Return Name
+        Return NameFull
     End Function
+    Protected MustOverride Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String Implements ConsoleReportBriefable.ConsoleReportBrief
 End Class
