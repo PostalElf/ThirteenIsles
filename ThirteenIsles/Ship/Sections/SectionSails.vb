@@ -53,7 +53,8 @@
         End Get
     End Property
     Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
-        Return _Name
+        Dim total As String = vbTabb(Name & ":", colonPosition)
+        Return total
     End Function
 End Class
 

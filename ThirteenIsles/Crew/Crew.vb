@@ -96,8 +96,10 @@
         Next
         Return total
     End Function
-    Public Function ConsoleReportBrief() As String
-
+    Public Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
+        Dim total As String = vbTabb(Name & ":", colonPosition)
+        total &= _Job.JobDescription
+        Return total
     End Function
 End Class
 

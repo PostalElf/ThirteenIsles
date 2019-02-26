@@ -37,7 +37,7 @@
     End Property
 
     Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
-        Dim total As String = vbTabb(_Name & ":", 15)
+        Dim total As String = vbTabb(Name & ":", colonPosition)
         total &= ProgressBar(10, LoadProgressPercentage)
         Return total
     End Function

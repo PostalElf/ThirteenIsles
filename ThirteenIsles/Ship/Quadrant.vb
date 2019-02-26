@@ -75,6 +75,7 @@
 
         total &= ParseConsoleReportBrief(GetCrews({""}), ind + 1, "Crew")
         total &= ParseConsoleReportBrief(GetSections({"type=gun"}), ind + 1, "Guns")
+        total &= ParseConsoleReportBrief(GetSections({"type=sails"}), ind + 1, "Sails")
         total &= ParseConsoleReportBrief(GetSections({"type=quarters"}), ind + 1, "Quarters")
         Return total
     End Function

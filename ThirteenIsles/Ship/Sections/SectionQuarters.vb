@@ -53,7 +53,9 @@
         End Get
     End Property
     Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
-        Return _Name
+        Dim total As String = vbTabb(Name & ":", colonPosition) & " "
+        total &= NamePrefix() & " " & Race.ToString & " Quarters (" & GetCrews({""}).Count & "/" & CrewMax & ")"
+        Return total
     End Function
     Protected Overrides Function Addable(ByVal Crew As Crew) As Boolean
         If Crew.Race <> Race Then Return False
