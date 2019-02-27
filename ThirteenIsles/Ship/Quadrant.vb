@@ -74,12 +74,16 @@
         Dim total As String = vbIndent(ind) & Facing.ToString & ":" & vbCrLf
 
         total &= ParseConsoleReportBrief(GetCrews({""}), ind + 1, "Crew")
-        total &= ParseConsoleReportBrief(GetSections({"type=gun"}), ind + 1, "Guns")
-        total &= ParseConsoleReportBrief(GetSections({"type=sails"}), ind + 1, "Sails")
-        total &= ParseConsoleReportBrief(GetSections({"type=quarters"}), ind + 1, "Quarters")
+        total &= ParseConsoleReportBrief("Guns", ind + 1)
+        total &= ParseConsoleReportBrief("Sails", ind + 1)
+        total &= ParseConsoleReportBrief("Quarters", ind + 1)
         Return total
     End Function
-    Private Function ParseConsoleReportBrief(ByVal l As IEnumerable(Of Object), ByVal ind As Integer, ByVal title As String) As String
+    Private Function ParseConsoleReportBrief(ByVal targetSectionName As String, ByVal ind As Integer) As String
+        Dim l As List(Of Section) = GetSections({"type=" & targetSectionName.ToLower})
+        Return ParseConsoleReportBrief(l, ind, targetSectionName)
+    End Function
+    Private Function ParseConsoleReportBrief(ByVal l As IEnumerable(Of Object), ByVal ind As Integer, ByVal title As String)
         Dim total As String = ""
         Dim count As Integer = 0
         For Each Item In l

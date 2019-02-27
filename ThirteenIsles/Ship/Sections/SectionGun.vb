@@ -14,7 +14,7 @@
         For Each p In param
             Dim ps As String() = p.Split("=")
             Select Case ps(0).ToLower
-                Case "type" : If ps(1) <> "gun" Then Return False
+                Case "type" : If ps(1) <> "gun" AndAlso ps(1) <> "guns" Then Return False
                 Case Else : If MyBase.GetSectionBase(ps) = False Then Return False
             End Select
         Next
