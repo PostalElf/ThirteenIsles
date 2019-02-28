@@ -69,18 +69,26 @@
             CType(_Job, ShipAssignable).Add(Me)
         End Set
     End Property
-    Private ReadOnly Property JobSkill As Skill
+    Public ReadOnly Property JobSkill As Skill
         Get
             If _Job Is Nothing Then Return Nothing
-            Return _Job.jobskill
+            Return _Job.JobSkill
         End Get
     End Property
-    Public ReadOnly Property Skill(ByVal s As Skill) As Integer
+    Public ReadOnly Property GetSkill(ByVal s As Skill) As Integer
         Get
             Return Skills(s) + Traits.GetSkillBonus(s)
         End Get
     End Property
+    Public ReadOnly Property GetJobSkill As Integer
+        Get
+            Return GetSkill(JobSkill)
+        End Get
+    End Property
 
+    Public Overrides Function ToString() As String
+        Return Name
+    End Function
     Public Function ConsoleReport(Optional ByVal id As Integer = 0) As String
         Dim total As String = vbIndent(id) & _Name & ", " & _Race.ToString
         If _Job Is Nothing = False Then total &= " " & _Job.JobDescription
@@ -92,7 +100,7 @@
         total &= vbIndent(id + 1) & "Skills:" & vbCrLf
         For Each s In [Enum].GetValues(GetType(Skill))
             total &= vbIndent(id + 2) & vbTabb(s.ToString & ":", 16)
-            total &= Skill(s) & " " & ProgressBar(5, Skills.XPPercentage(s)) & vbCrLf
+            total &= GetSkill(s) & " " & ProgressBar(5, Skills.XPPercentage(s)) & vbCrLf
         Next
         Return total
     End Function

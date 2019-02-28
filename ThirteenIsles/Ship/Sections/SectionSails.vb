@@ -22,6 +22,33 @@
     End Function
 
     Private Quality As SailQuality
+    Private ReadOnly Property SpeedBase As Double
+        Get
+            Dim baseSpeed As Double = 0
+            Select Case Quality
+                Case SailQuality.Crude : baseSpeed = 0.5
+                Case SailQuality.Basic : baseSpeed = 1
+                Case SailQuality.Standard : baseSpeed = 2
+                Case SailQuality.Improved : baseSpeed = 2.5
+                Case SailQuality.Masterwork : baseSpeed = 3
+                Case SailQuality.Ensorcelled : baseSpeed = 4
+            End Select
+            Return baseSpeed
+        End Get
+    End Property
+    Public ReadOnly Property SpeedTotal As Double
+        Get
+            Dim total As Integer = 0
+            For Each Crew In GetCrews({""})
+                total += Crew.GetJobSkill
+            Next
+            total *= SpeedBase
+
+            If GetCrews({""}).Count < CrewMax / 2 Then total /= 2
+            total = Math.Round(total * 2, MidpointRounding.AwayFromZero) / 2
+            Return total
+        End Get
+    End Property
 
     Public Shared Function Generate(ByVal quality As SailQuality, ByVal crewMax As Integer) As SectionSails
         Dim s As New SectionSails
@@ -53,7 +80,10 @@
         End Get
     End Property
     Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
-        Dim total As String = vbTabb(Name & ":", colonPosition)
+        Dim total As String = vbTabb(Name, colonPosition) & ":  "
+        total &= "[" & GetCrews({""}).Count & "/" & CrewMax & "]"
+        total &= " +" & SpeedTotal.ToString("00.0")
+        total &= " (" & Quality.ToString & ")"
         Return total
     End Function
 End Class
