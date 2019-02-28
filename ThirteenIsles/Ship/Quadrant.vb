@@ -21,7 +21,8 @@
     Public Function GetCrews(ByVal param As String()) As List(Of Crew)
         Dim total As New List(Of Crew)
         For Each s In Sections
-            Dim ss As List(Of Crew) = s.getcrews(param)
+            If TypeOf s Is SectionQuarters Then Continue For
+            Dim ss As List(Of Crew) = s.GetCrews(param)
             If ss Is Nothing = False AndAlso ss.Count > 0 Then total.AddRange(ss)
         Next
         Return total
