@@ -12,40 +12,40 @@
                     .Quadrants.Add(Directions.Aft, New Quadrant(ship, Directions.Aft, 3, 0))
                     .Quadrants.Add(Directions.Port, New Quadrant(ship, Directions.Port, 3, 1))
                     .Inventory = New Inventory(20)
-                    .MaxSailing = 20
-                    .MaxManeuver = 5
+                    .SailingMax = 20
+                    .ManeuverMax = 5
                 Case ShipSize.Schooner
                     .Quadrants.Add(Directions.Fore, New Quadrant(ship, Directions.Fore, 4, 1))
                     .Quadrants.Add(Directions.Starboard, New Quadrant(ship, Directions.Starboard, 4, 1))
                     .Quadrants.Add(Directions.Aft, New Quadrant(ship, Directions.Aft, 4, 0))
                     .Quadrants.Add(Directions.Port, New Quadrant(ship, Directions.Port, 4, 1))
                     .Inventory = New Inventory(30)
-                    .MaxSailing = 20
-                    .MaxManeuver = 4
+                    .SailingMax = 20
+                    .ManeuverMax = 4
                 Case ShipSize.Brig
                     .Quadrants.Add(Directions.Fore, New Quadrant(ship, Directions.Fore, 5, 1))
                     .Quadrants.Add(Directions.Starboard, New Quadrant(ship, Directions.Starboard, 5, 2))
                     .Quadrants.Add(Directions.Aft, New Quadrant(ship, Directions.Aft, 5, 0))
                     .Quadrants.Add(Directions.Port, New Quadrant(ship, Directions.Port, 5, 2))
                     .Inventory = New Inventory(50)
-                    .MaxSailing = 20
-                    .MaxManeuver = 3
+                    .SailingMax = 20
+                    .ManeuverMax = 3
                 Case ShipSize.Frigate
                     .Quadrants.Add(Directions.Fore, New Quadrant(ship, Directions.Fore, 6, 1))
                     .Quadrants.Add(Directions.Starboard, New Quadrant(ship, Directions.Starboard, 6, 3))
                     .Quadrants.Add(Directions.Aft, New Quadrant(ship, Directions.Aft, 6, 1))
                     .Quadrants.Add(Directions.Port, New Quadrant(ship, Directions.Port, 6, 3))
                     .Inventory = New Inventory(70)
-                    .MaxSailing = 16
-                    .MaxManeuver = 2
+                    .SailingMax = 16
+                    .ManeuverMax = 2
                 Case ShipSize.Manowar
                     .Quadrants.Add(Directions.Fore, New Quadrant(ship, Directions.Fore, 7, 1))
                     .Quadrants.Add(Directions.Starboard, New Quadrant(ship, Directions.Starboard, 7, 4))
                     .Quadrants.Add(Directions.Aft, New Quadrant(ship, Directions.Aft, 7, 1))
                     .Quadrants.Add(Directions.Port, New Quadrant(ship, Directions.Port, 7, 4))
                     .Inventory = New Inventory(80)
-                    .MaxSailing = 15
-                    .MaxManeuver = 1
+                    .SailingMax = 15
+                    .ManeuverMax = 1
             End Select
         End With
         Return ship
@@ -63,10 +63,10 @@
         Return Inventory.Remove(item)
     End Function
 
-    Private Sailing As Integer
-    Private MaxSailing As Integer
-    Private Maneuver As Integer
-    Private MaxManeuver As Integer
+    Private Property Sailing As Integer Implements ShipCombat.Sailing
+    Private Property SailingMax As Integer Implements ShipCombat.SailingMax
+    Private Property Maneuver As Integer Implements ShipCombat.Maneuver
+    Private Property ManeuverMax As Integer Implements ShipCombat.ManeuverMax
 
     Private Property Quadrants As New Dictionary(Of Directions, Quadrant) Implements ShipCombat.Quadrants
     Public Function Add(ByVal section As Section, ByVal facing As Directions) As String
@@ -97,8 +97,8 @@
     Public Function ConsoleReport(ByVal id As Integer) As String
         Dim total As String = vbIndent(id) & "The " & Size.ToString & " '" & Name & "'" & vbCrLf
         total &= vbIndent(id + 1) & vbTabb("Cargo:", 12) & Inventory.Size & "/" & Inventory.SizeMax & vbCrLf
-        total &= vbIndent(id + 1) & vbTabb("Sailgauge:", 12) & MaxSailing & vbCrLf
-        total &= vbIndent(id + 1) & vbTabb("Maneuvers:", 12) & Maneuver & "/" & MaxManeuver & vbCrLf
+        total &= vbIndent(id + 1) & vbTabb("Sailgauge:", 12) & SailingMax & vbCrLf
+        total &= vbIndent(id + 1) & vbTabb("Maneuvers:", 12) & Maneuver & "/" & ManeuverMax & vbCrLf
 
         total &= vbIndent(id + 1) & "Quadrants:" & vbCrLf
         For n As Directions = 1 To 4
