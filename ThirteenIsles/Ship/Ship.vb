@@ -88,6 +88,9 @@
         End While
         If Maneuver > ManeuverMax Then Maneuver = ManeuverMax
     End Sub
+    Private Sub CombatAttack(ByVal target As ShipCombat, ByVal gun As SectionGun) Implements ShipCombat.Attack
+
+    End Sub
 #End Region
 
     Private Property Quadrants As New Dictionary(Of Directions, Quadrant) Implements ShipCombat.Quadrants

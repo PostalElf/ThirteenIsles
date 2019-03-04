@@ -9,4 +9,5 @@
     Property ManeuverMax As Integer
 
     Sub Tick(ByVal battlefield As Battlefield)
+    Sub Attack(ByVal ship As ShipCombat, ByVal gun As SectionGun)
 End Interface

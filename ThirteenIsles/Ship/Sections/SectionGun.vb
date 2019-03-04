@@ -20,19 +20,19 @@
         Next
         Return True
     End Function
-    Private LoadProgress As Integer
-    Private LoadProgressMax As Integer
-    Private ReadOnly Property LoadProgressPercentage As Integer
-        Get
-            Return LoadProgress / LoadProgressMax * 100
-        End Get
-    End Property
-
     Public Overrides ReadOnly Property NameFull As String
         Get
             Dim total As String = _Name & " (Guns"
             If Quadrant Is Nothing = False Then total &= " - " & Quadrant.Facing.ToString & ")" Else total &= ")"
             Return total
+        End Get
+    End Property
+
+    Private LoadProgress As Integer
+    Private LoadProgressMax As Integer
+    Private ReadOnly Property LoadProgressPercentage As Integer
+        Get
+            Return LoadProgress / LoadProgressMax * 100
         End Get
     End Property
 
