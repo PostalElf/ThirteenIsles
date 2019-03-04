@@ -22,21 +22,21 @@
     End Function
 
     Private Quality As SailQuality
-    Private ReadOnly Property SpeedBase As Double
+    Private ReadOnly Property SpeedBase As Integer
         Get
             Dim baseSpeed As Double = 0
             Select Case Quality
-                Case SailQuality.Crude : baseSpeed = 0.5
-                Case SailQuality.Basic : baseSpeed = 1
-                Case SailQuality.Standard : baseSpeed = 2
-                Case SailQuality.Improved : baseSpeed = 2.5
-                Case SailQuality.Masterwork : baseSpeed = 3
-                Case SailQuality.Ensorcelled : baseSpeed = 4
+                Case SailQuality.Crude : baseSpeed = 5
+                Case SailQuality.Basic : baseSpeed = 10
+                Case SailQuality.Standard : baseSpeed = 20
+                Case SailQuality.Improved : baseSpeed = 25
+                Case SailQuality.Masterwork : baseSpeed = 30
+                Case SailQuality.Ensorcelled : baseSpeed = 40
             End Select
             Return baseSpeed
         End Get
     End Property
-    Public ReadOnly Property SpeedTotal As Double
+    Public ReadOnly Property SpeedTotal As Integer
         Get
             Dim total As Integer = 0
             For Each Crew In GetCrews({""})
@@ -45,8 +45,7 @@
             total *= SpeedBase
 
             If GetCrews({""}).Count < CrewMax / 2 Then total /= 2
-            total = Math.Round(total * 2, MidpointRounding.AwayFromZero) / 2
-            Return total
+            Return CInt(total)
         End Get
     End Property
 

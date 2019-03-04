@@ -7,4 +7,6 @@
     Property SailingMax As Integer
     Property Maneuver As Integer
     Property ManeuverMax As Integer
+
+    Sub Tick(ByVal battlefield As Battlefield)
 End Interface
