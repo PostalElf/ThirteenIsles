@@ -87,6 +87,11 @@
             Maneuver += 1
         End While
         If Maneuver > ManeuverMax Then Maneuver = ManeuverMax
+
+        For Each section In GetSections({"type=gun"})
+            Dim gun As SectionGun = CType(section, SectionGun)
+            gun.CombatTick()
+        Next
     End Sub
     Private Sub CombatAttack(ByVal target As ShipCombat, ByVal gun As SectionGun) Implements ShipCombat.Attack
 

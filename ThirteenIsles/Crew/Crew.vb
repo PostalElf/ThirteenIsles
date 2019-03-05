@@ -69,13 +69,13 @@
             CType(_Job, ShipAssignable).Add(Me)
         End Set
     End Property
-    Public ReadOnly Property JobSkill As Skill
+    Private ReadOnly Property JobSkill As Skill
         Get
             If _Job Is Nothing Then Return Nothing
             Return _Job.JobSkill
         End Get
     End Property
-    Public ReadOnly Property GetSkill(ByVal s As Skill) As Integer
+    Private ReadOnly Property GetSkill(ByVal s As Skill) As Integer
         Get
             Return Skills(s) + Traits.GetSkillBonus(s)
         End Get

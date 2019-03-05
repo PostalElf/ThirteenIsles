@@ -35,6 +35,29 @@
             Return LoadProgress / LoadProgressMax * 100
         End Get
     End Property
+    Private ReadOnly Property LoadProgressIncome As Integer
+        Get
+            Dim total As Integer = 0
+            For Each Crew In GetCrews({""})
+                total += Crew.GetJobSkill
+            Next
+            Return total
+        End Get
+    End Property
+    Private Accuracy As Integer
+    Private DamageCrew As Integer
+    Private DamageHull As Integer
+
+    Public ReadOnly Property IsReady As Boolean
+        Get
+            If LoadProgressPercentage = 100 Then Return True Else Return False
+        End Get
+    End Property
+    Public Sub CombatTick()
+        If IsReady = True Then Exit Sub
+        LoadProgress += LoadProgressIncome
+        If LoadProgress > LoadProgressMax Then LoadProgress = LoadProgressMax
+    End Sub
 
     Protected Overrides Function ConsoleReportBrief(Optional ByVal colonPosition As Integer = 0) As String
         Dim total As String = vbTabb(Name & ":", colonPosition)
